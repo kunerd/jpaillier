@@ -1,7 +1,6 @@
 package de.paillier.key;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Random;
 
 public class KeyPair {
@@ -21,14 +20,31 @@ public class KeyPair {
 		this.publicKey = new PublicKey(n, g,  bits);
 
 		/* compute the private key lambda = lcm(p-1,q-1) */
-		BigInteger lambda;
-		
 		BigInteger pMinusOne = p.subtract(BigInteger.ONE);
 		BigInteger qMinusOne = q.subtract(BigInteger.ONE);
 		
-        lambda = pMinusOne.multiply(qMinusOne);
-        lambda = lambda.divide(pMinusOne.gcd(qMinusOne));
+		BigInteger lambda  = this.lcm(pMinusOne, qMinusOne);
         
         this.privateKey = new PrivateKey(lambda, this.publicKey);
+	}
+	
+	/* TODO add to own BigInteger extended class*/
+	private BigInteger lcm(BigInteger a, BigInteger b)
+	{
+		BigInteger result;
+		BigInteger gcd = a.gcd(b);
+		
+		result = a.abs().divide(gcd);
+		result = result.multiply(b.abs());
+		
+		return result;
+	}
+	
+	public PrivateKey getPrivateKey() {
+		return privateKey;
+	}
+	
+	public PublicKey getPublicKey() {
+		return publicKey;
 	}
 }

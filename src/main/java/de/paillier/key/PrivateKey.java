@@ -10,9 +10,17 @@ public class PrivateKey {
 	public PrivateKey(BigInteger lambda, PublicKey publicKey) {
 		this.lambda = lambda;
 		
-		this.x = publicKey.getNPlusOne().modPow(lambda, publicKey.getNSquare());
+		this.x = publicKey.getG().modPow(lambda, publicKey.getNSquare());
 		this.x = this.x.subtract(BigInteger.ONE);
 		this.x = this.x.divide(publicKey.getN());
 		this.x = this.x.modInverse(publicKey.getN());
+	}
+	
+	public BigInteger getLambda() {
+		return lambda;
+	}
+	
+	public BigInteger getX() {
+		return x;
 	}
 }
