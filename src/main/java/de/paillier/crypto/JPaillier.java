@@ -27,7 +27,6 @@ public class JPaillier {
 			r = new BigInteger(publicKey.getBits(), new Random());
 		} while (r.compareTo(n) >= 0);
 
-		// TODO use pre-calculated values to make this faster
 		BigInteger result = g.modPow(m, nSquare);
 		BigInteger x = r.modPow(n, nSquare);
 

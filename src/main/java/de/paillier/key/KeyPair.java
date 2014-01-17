@@ -14,20 +14,34 @@ public class KeyPair {
 		
 		BigInteger n = p.multiply(q);
 		
-		// TODO calculate in Z*_{n^2} where gcd (L(g^lambda mod n^2), n) = 1
-		BigInteger g = new BigInteger("2");
-		
-		this.publicKey = new PublicKey(n, g,  bits);
-
-		/* compute the private key lambda = lcm(p-1,q-1) */
 		BigInteger pMinusOne = p.subtract(BigInteger.ONE);
 		BigInteger qMinusOne = q.subtract(BigInteger.ONE);
-		
 		BigInteger lambda  = this.lcm(pMinusOne, qMinusOne);
+		
+		BigInteger g = selectG(bits, lambda, n);
+		
+		this.publicKey = new PublicKey(n, g,  bits);
         
         this.privateKey = new PrivateKey(lambda, this.publicKey);
 	}
 	
+	private BigInteger selectG(int bits, BigInteger lambda, BigInteger n) {
+		BigInteger g;
+		do {
+			g = new BigInteger(bits, new Random());
+		} while (checkIfGIsGood(g, lambda, n));
+		
+		return g;
+	}
+	
+	private boolean checkIfGIsGood(BigInteger g, BigInteger lambda, BigInteger n) {
+		BigInteger temp = g.modPow(lambda, n.multiply(n));
+		temp= temp.subtract(BigInteger.ONE);
+		temp = temp.divide(n);
+		
+		return temp.gcd(n) == BigInteger.ONE;
+	}
+
 	/* TODO add to own BigInteger extended class*/
 	private BigInteger lcm(BigInteger a, BigInteger b)
 	{
