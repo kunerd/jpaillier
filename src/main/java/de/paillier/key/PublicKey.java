@@ -5,12 +5,12 @@ import java.math.BigInteger;
 public class PublicKey {
 	private int bits;
 	private BigInteger n;
-	private BigInteger nSquare;
+	private BigInteger nSquared;
 	private BigInteger g;
 
-	public PublicKey(BigInteger n, BigInteger g, int bits) {
+	public PublicKey(BigInteger n, BigInteger nSquared, BigInteger g, int bits) {
 		this.n = n;
-		this.nSquare = n.multiply(n);
+		this.nSquared = nSquared;
 		this.bits = bits;
 		this.g = g;
 	}
@@ -22,9 +22,9 @@ public class PublicKey {
 	public BigInteger getN() {
 		return n;
 	}
-
-	public BigInteger getNSquare() {
-		return nSquare;
+	
+	public BigInteger getnSquared() {
+		return nSquared;
 	}
 
 	public BigInteger getG() {

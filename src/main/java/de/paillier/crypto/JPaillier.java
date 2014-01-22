@@ -9,18 +9,19 @@ import de.paillier.key.PublicKey;
 
 public class JPaillier {
 
-	private KeyPair keypair;
+	private PublicKey publicKey;
+	private PrivateKey privateKey;
 
-	public JPaillier() {
-		keypair = new KeyPair(512, 64);
+	public JPaillier(KeyPair keypair) {
+		this.publicKey = keypair.getPublicKey();
+		this.privateKey = keypair.getPrivateKey();
 	}
 
 	public BigInteger encrypt(BigInteger m) {
 		
-		PublicKey publicKey = keypair.getPublicKey();
 		BigInteger g = publicKey.getG();
 		BigInteger n = publicKey.getN();
-		BigInteger nSquare = publicKey.getNSquare();
+		BigInteger nSquare = publicKey.getnSquared();
 		
 		BigInteger r;
 		do {
@@ -37,11 +38,9 @@ public class JPaillier {
 	}
 	
     public BigInteger decryption(BigInteger c) {
-		PublicKey publicKey = keypair.getPublicKey();
-		PrivateKey privateKey = keypair.getPrivateKey();
 		
 		BigInteger n = publicKey.getN();
-		BigInteger nSquare = publicKey.getNSquare();
+		BigInteger nSquare = publicKey.getnSquared();
 		BigInteger lambda = privateKey.getLambda();
 		
         BigInteger u = privateKey.getX();
@@ -49,7 +48,7 @@ public class JPaillier {
     }
     
     public PublicKey getPublicKey() {
-    	return this.keypair.getPublicKey();
+    	return publicKey;
 	}
 
 }

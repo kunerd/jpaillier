@@ -1,12 +1,15 @@
 package de.paillier.crypto;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.math.BigInteger;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import de.paillier.key.KeyPair;
+import de.paillier.key.KeyPairBuilder;
 import de.paillier.key.PublicKey;
 
 public class JPaillierTest {
@@ -15,7 +18,10 @@ public class JPaillierTest {
 	
 	@Before
 	public void init() {
-		paillier = new JPaillier();
+		KeyPairBuilder keygen = new KeyPairBuilder();
+		KeyPair keypair = keygen.generateKeyPair();
+		
+		paillier = new JPaillier(keypair);
 	}
 
 	@Test
@@ -45,7 +51,7 @@ public class JPaillierTest {
 		BigInteger encryptedB = paillier.encrypt(plainB);
 		
 		PublicKey publicKey = this.paillier.getPublicKey();
-		BigInteger decryptedProduct = paillier.decryption(encryptedA.multiply(encryptedB).mod(publicKey.getNSquare()));
+		BigInteger decryptedProduct = paillier.decryption(encryptedA.multiply(encryptedB).mod(publicKey.getnSquared()));
 		BigInteger plainSum = plainA.add(plainB).mod(publicKey.getN());
 		
 		assertEquals(decryptedProduct, plainSum);
@@ -59,7 +65,7 @@ public class JPaillierTest {
 		BigInteger encryptedA = paillier.encrypt(plainA);
 		
 		PublicKey publicKey = this.paillier.getPublicKey();
-		BigInteger decryptedPow = paillier.decryption(encryptedA.modPow(plainB, publicKey.getNSquare()));
+		BigInteger decryptedPow = paillier.decryption(encryptedA.modPow(plainB, publicKey.getnSquared()));
 		BigInteger plainSum = plainA.multiply(plainB).mod(publicKey.getN());
 		
 		assertEquals(decryptedPow, plainSum);

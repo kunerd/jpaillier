@@ -5,15 +5,12 @@ import java.math.BigInteger;
 public class PrivateKey {
 	
 	private BigInteger lambda;
-	private BigInteger x;
+	private BigInteger preCalculatedDenominator;
 	
-	public PrivateKey(BigInteger lambda, PublicKey publicKey) {
+	public PrivateKey(BigInteger lambda, BigInteger preCalculatedDenominator) {
 		this.lambda = lambda;
 		
-		this.x = publicKey.getG().modPow(lambda, publicKey.getNSquare());
-		this.x = this.x.subtract(BigInteger.ONE);
-		this.x = this.x.divide(publicKey.getN());
-		this.x = this.x.modInverse(publicKey.getN());
+		this.preCalculatedDenominator = preCalculatedDenominator;
 	}
 	
 	public BigInteger getLambda() {
@@ -21,6 +18,6 @@ public class PrivateKey {
 	}
 	
 	public BigInteger getX() {
-		return x;
+		return preCalculatedDenominator;
 	}
 }
