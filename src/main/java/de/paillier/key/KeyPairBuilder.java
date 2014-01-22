@@ -1,7 +1,7 @@
 package de.paillier.key;
 
 import java.math.BigInteger;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class KeyPairBuilder {
 	private int bits = 1024;
@@ -12,8 +12,9 @@ public class KeyPairBuilder {
 	}
 
 	public KeyPair generateKeyPair() {
-		BigInteger p = new BigInteger(bits / 2, certainty, new Random());
-		BigInteger q = new BigInteger(bits / 2, certainty, new Random());
+		SecureRandom sRandom = new SecureRandom();
+		BigInteger p = new BigInteger(bits / 2, certainty, sRandom);
+		BigInteger q = new BigInteger(bits / 2, certainty, sRandom);
 		
 		BigInteger n = p.multiply(q);
 		BigInteger nSquared = n.multiply(n);
@@ -25,7 +26,7 @@ public class KeyPairBuilder {
 		BigInteger g = BigInteger.valueOf(2);
 		BigInteger helper; 
 		do {
-			g = new BigInteger(bits, new Random());
+			g = new BigInteger(bits, sRandom);
 			helper = calculateL(g.modPow(lambda, nSquared), n);
 
 		} while (helper.gcd(n) == BigInteger.ONE);		
