@@ -17,7 +17,7 @@ public class PrivateKey {
 		return lambda;
 	}
 	
-	public BigInteger getX() {
+	public BigInteger getPreCalculatedDenominator() {
 		return preCalculatedDenominator;
 	}
 }

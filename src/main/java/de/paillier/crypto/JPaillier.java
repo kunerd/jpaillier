@@ -43,7 +43,7 @@ public class JPaillier {
 		BigInteger nSquare = publicKey.getnSquared();
 		BigInteger lambda = privateKey.getLambda();
 		
-        BigInteger u = privateKey.getX();
+        BigInteger u = privateKey.getPreCalculatedDenominator();
         return c.modPow(lambda, nSquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
     }
     

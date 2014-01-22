@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class KeyPairBuilder {
 	private int bits = 1024;
-	private int certainty = 1;
+	private int certainty = 64;
 	
 	public void setBits(int bits) {
 		this.bits = bits;
@@ -27,7 +27,6 @@ public class KeyPairBuilder {
 		do {
 			g = new BigInteger(bits, new Random());
 			helper = calculateL(g.modPow(lambda, nSquared), n);
-			System.out.println(helper.gcd(n));
 
 		} while (helper.gcd(n) == BigInteger.ONE);		
 		
