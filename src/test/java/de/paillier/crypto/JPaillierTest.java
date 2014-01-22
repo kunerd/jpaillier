@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import de.paillier.key.KeyPair;
 import de.paillier.key.KeyPairBuilder;
-import de.paillier.key.PublicKey;
 
 public class JPaillierTest {
 	
@@ -42,32 +41,4 @@ public class JPaillierTest {
 		assertEquals(plainData, decryptedData);
 	}
 	
-	@Test
-	public void testHomomorphicAddition() {
-		BigInteger plainA = BigInteger.valueOf(14);
-		BigInteger plainB = BigInteger.valueOf(203);
-		
-		BigInteger encryptedA = paillier.encrypt(plainA);
-		BigInteger encryptedB = paillier.encrypt(plainB);
-		
-		PublicKey publicKey = this.paillier.getPublicKey();
-		BigInteger decryptedProduct = paillier.decryption(encryptedA.multiply(encryptedB).mod(publicKey.getnSquared()));
-		BigInteger plainSum = plainA.add(plainB).mod(publicKey.getN());
-		
-		assertEquals(decryptedProduct, plainSum);
-	}
-	
-	@Test
-	public void testHomomorphicMultiplication () {
-		BigInteger plainA = BigInteger.valueOf(14);
-		BigInteger plainB = BigInteger.valueOf(203);
-		
-		BigInteger encryptedA = paillier.encrypt(plainA);
-		
-		PublicKey publicKey = this.paillier.getPublicKey();
-		BigInteger decryptedPow = paillier.decryption(encryptedA.modPow(plainB, publicKey.getnSquared()));
-		BigInteger plainSum = plainA.multiply(plainB).mod(publicKey.getN());
-		
-		assertEquals(decryptedPow, plainSum);
-	}
 }
