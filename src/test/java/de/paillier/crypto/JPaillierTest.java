@@ -13,20 +13,18 @@ import de.paillier.key.KeyPairBuilder;
 
 public class JPaillierTest {
 	
-	private JPaillier paillier;
+	private KeyPair keyPair;
 	
 	@Before
 	public void init() {
 		KeyPairBuilder keygen = new KeyPairBuilder();
-		KeyPair keypair = keygen.generateKeyPair();
-		
-		paillier = new JPaillier(keypair);
+		this.keyPair = keygen.generateKeyPair();		
 	}
 
 	@Test
 	public void testEncryption() {
 		BigInteger plainData = BigInteger.valueOf(10);
-		BigInteger encryptedData = paillier.encrypt(plainData);
+		BigInteger encryptedData = JPaillier.encrypt(plainData, keyPair.getPublicKey());
 		
 		assertNotEquals(plainData, encryptedData);
 	}
@@ -35,8 +33,8 @@ public class JPaillierTest {
 	public void testDecyption() {
 		BigInteger plainData = BigInteger.valueOf(10);
 		
-		BigInteger encryptedData = paillier.encrypt(plainData);
-		BigInteger decryptedData = paillier.decryption(encryptedData);
+		BigInteger encryptedData = JPaillier.encrypt(plainData, keyPair.getPublicKey());
+		BigInteger decryptedData = JPaillier.decrypt(encryptedData, keyPair);
 		
 		assertEquals(plainData, decryptedData);
 	}

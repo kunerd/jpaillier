@@ -13,19 +13,14 @@ import de.paillier.key.PublicKey;
 
 public class HomomorphicPropertiesTest {
 
-	private JPaillier paillier;
 	private KeyPair keypair;
-	PublicKey publicKey;
+	private PublicKey publicKey;
 
 	@Before
 	public void init() {
 		KeyPairBuilder keygen = new KeyPairBuilder();
-		
-		keypair = keygen.generateKeyPair();
-
-		paillier = new JPaillier(keypair);
-		
-		publicKey = paillier.getPublicKey();
+		this.keypair = keygen.generateKeyPair();
+		this.publicKey = keypair.getPublicKey();
 	}
 
 	@Test
@@ -33,11 +28,11 @@ public class HomomorphicPropertiesTest {
 		BigInteger plainA = BigInteger.valueOf(102);
 		BigInteger plainB = BigInteger.valueOf(203);
 
-		BigInteger encryptedA = paillier.encrypt(plainA);
-		BigInteger encryptedB = paillier.encrypt(plainB);
+		BigInteger encryptedA = JPaillier.encrypt(plainA, publicKey);
+		BigInteger encryptedB = JPaillier.encrypt(plainB, publicKey);
 
-		BigInteger decryptedProduct = paillier.decryption(encryptedA.multiply(
-				encryptedB).mod(publicKey.getnSquared()));
+		BigInteger decryptedProduct = JPaillier.decrypt(encryptedA.multiply(
+				encryptedB).mod(publicKey.getnSquared()), keypair);
 		BigInteger plainSum = plainA.add(plainB).mod(publicKey.getN());
 
 		assertEquals(decryptedProduct, plainSum);
@@ -48,10 +43,10 @@ public class HomomorphicPropertiesTest {
 		BigInteger plainA = BigInteger.valueOf(14);
 		BigInteger plainB = BigInteger.valueOf(203);
 
-		BigInteger encryptedA = paillier.encrypt(plainA);
+		BigInteger encryptedA = JPaillier.encrypt(plainA, publicKey);
 
-		BigInteger decryptedPow = paillier.decryption(encryptedA.modPow(plainB,
-				publicKey.getnSquared()));
+		BigInteger decryptedPow = JPaillier.decrypt(encryptedA.modPow(plainB,
+				publicKey.getnSquared()), keypair);
 		BigInteger plainSum = plainA.multiply(plainB).mod(publicKey.getN());
 
 		assertEquals(decryptedPow, plainSum);
@@ -62,16 +57,16 @@ public class HomomorphicPropertiesTest {
 		BigInteger plainA = BigInteger.valueOf(23);
 		BigInteger plainB = BigInteger.valueOf(234);
 
-		BigInteger encryptedA = paillier.encrypt(plainA);
-		BigInteger decryptedPowA = paillier.decryption(encryptedA.modPow(
-				plainB, publicKey.getnSquared()));
+		BigInteger encryptedA = JPaillier.encrypt(plainA, publicKey);
+		BigInteger decryptedPowA = JPaillier.decrypt(encryptedA.modPow(
+				plainB, publicKey.getnSquared()), keypair);
 		BigInteger plainSumA = plainA.multiply(plainB).mod(publicKey.getN());
 
 		assertEquals(decryptedPowA, plainSumA);
 
-		BigInteger encryptedB = paillier.encrypt(plainB);
-		BigInteger decryptedPowB = paillier.decryption(encryptedB.modPow(
-				plainA, publicKey.getnSquared()));
+		BigInteger encryptedB = JPaillier.encrypt(plainB, publicKey);
+		BigInteger decryptedPowB = JPaillier.decrypt(encryptedB.modPow(
+				plainA, publicKey.getnSquared()), keypair);
 		BigInteger plainSumB = plainA.multiply(plainB).mod(publicKey.getN());
 
 		assertEquals(decryptedPowB, plainSumB);
@@ -86,9 +81,9 @@ public class HomomorphicPropertiesTest {
 
 		BigInteger g = publicKey.getG();
 
-		BigInteger encryptedA = paillier.encrypt(plainA);
-		BigInteger decryptedPow = paillier.decryption(encryptedA.multiply(g.modPow(
-				plainB, publicKey.getnSquared()).mod(publicKey.getnSquared())));
+		BigInteger encryptedA = JPaillier.encrypt(plainA, publicKey);
+		BigInteger decryptedPow = JPaillier.decrypt(encryptedA.multiply(g.modPow(
+				plainB, publicKey.getnSquared()).mod(publicKey.getnSquared())), keypair);
 		
 		BigInteger plainSumA = plainA.add(plainB).mod(publicKey.getN());
 
