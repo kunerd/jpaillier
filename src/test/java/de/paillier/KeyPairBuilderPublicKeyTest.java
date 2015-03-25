@@ -1,11 +1,16 @@
-package de.paillier.key;
+package de.paillier;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import de.paillier.KeyPair;
+import de.paillier.KeyPairBuilder;
+import de.paillier.PrivateKey;
+import de.paillier.PublicKey;
 
 public class KeyPairBuilderPublicKeyTest {
 	

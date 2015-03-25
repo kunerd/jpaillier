@@ -16,12 +16,13 @@ create a key pair:
 ```
 encryption:
 ```
-    BigInteger ciphertext = JPaillier.encrypt(plainData, keyPair.getPublicKey());
+	PublicKey publicKey = keyPair.getPublicKey();
+    BigInteger ciphertext = publicKey.encrypt(plainData);
 ```
 
 decrypt a ciphertext:
 ```
-    BigInteger decryptedData = JPaillier.decrypt(ciphertext, keyPair);
+    BigInteger decryptedData = keyPair.decrypt(ciphertext);
 ```
 
 

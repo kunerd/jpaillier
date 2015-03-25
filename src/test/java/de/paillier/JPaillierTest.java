@@ -1,4 +1,4 @@
-package de.paillier.crypto;
+package de.paillier;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -8,23 +8,26 @@ import java.math.BigInteger;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.paillier.key.KeyPair;
-import de.paillier.key.KeyPairBuilder;
+import de.paillier.KeyPair;
+import de.paillier.KeyPairBuilder;
 
 public class JPaillierTest {
 	
 	private KeyPair keyPair;
+	PublicKey publicKey;
 	
 	@Before
 	public void init() {
 		KeyPairBuilder keygen = new KeyPairBuilder();
-		this.keyPair = keygen.generateKeyPair();		
+		keyPair = keygen.generateKeyPair();
+		publicKey = keyPair.getPublicKey();
 	}
 
 	@Test
 	public void testEncryption() {
 		BigInteger plainData = BigInteger.valueOf(10);
-		BigInteger encryptedData = JPaillier.encrypt(plainData, keyPair.getPublicKey());
+		
+		BigInteger encryptedData = publicKey.encrypt(plainData);
 		
 		assertNotEquals(plainData, encryptedData);
 	}
@@ -33,8 +36,8 @@ public class JPaillierTest {
 	public void testDecyption() {
 		BigInteger plainData = BigInteger.valueOf(10);
 		
-		BigInteger encryptedData = JPaillier.encrypt(plainData, keyPair.getPublicKey());
-		BigInteger decryptedData = JPaillier.decrypt(encryptedData, keyPair);
+		BigInteger encryptedData = publicKey.encrypt(plainData);
+		BigInteger decryptedData = keyPair.decrypt(encryptedData);
 		
 		assertEquals(plainData, decryptedData);
 	}

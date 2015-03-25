@@ -1,9 +1,12 @@
-package de.paillier.key;
+package de.paillier;
 
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import de.paillier.KeyPair;
+import de.paillier.KeyPairBuilder;
 
 public class KeyPairBuilderTest {
 	

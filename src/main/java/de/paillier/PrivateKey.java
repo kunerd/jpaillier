@@ -1,4 +1,4 @@
-package de.paillier.key;
+package de.paillier;
 
 import java.math.BigInteger;
 

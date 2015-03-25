@@ -1,6 +1,7 @@
-package de.paillier.key;
+package de.paillier;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class PublicKey {
 	private int bits;
@@ -29,5 +30,21 @@ public class PublicKey {
 
 	public BigInteger getG() {
 		return g;
+	}
+	
+	public final BigInteger encrypt(BigInteger m) {
+		
+		BigInteger r;
+		do {
+			r = new BigInteger(bits, new Random());
+		} while (r.compareTo(n) >= 0);
+
+		BigInteger result = g.modPow(m, nSquared);
+		BigInteger x = r.modPow(n, nSquared);
+
+		result = result.multiply(x);
+		result = result.mod(nSquared);
+		
+		return result;
 	}
 }
