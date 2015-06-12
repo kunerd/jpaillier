@@ -29,7 +29,7 @@ public class KeyPairBuilder {
 			g = new BigInteger(bits, sRandom);
 			helper = calculateL(g.modPow(lambda, nSquared), n);
 
-		} while (helper.gcd(n) == BigInteger.ONE);		
+		} while (!helper.gcd(n).equals(BigInteger.ONE));
 		
 		PublicKey publicKey = new PublicKey(n, nSquared, g, bits);
 		PrivateKey privateKey = new PrivateKey(lambda, helper.modInverse(n));

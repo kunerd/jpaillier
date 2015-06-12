@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.paillier</groupId>
 	<artifactId>JPaillier</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>JPaillier</name>
 	<description>Paillier cryptosystem implementation.</description>
 
