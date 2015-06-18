@@ -7,8 +7,14 @@ public class KeyPairBuilder {
 	private int bits = 1024;
 	private int certainty = 64;
 	
-	public void setBits(int bits) {
+	public KeyPairBuilder setBits(int bits) {
 		this.bits = bits;
+		return this;
+	}
+	
+	public KeyPairBuilder setCertainty(int certainty) {
+		this.certainty = certainty;
+		return this;
 	}
 
 	public KeyPair generateKeyPair() {
@@ -25,6 +31,7 @@ public class KeyPairBuilder {
 		
 		BigInteger g = BigInteger.valueOf(2);
 		BigInteger helper; 
+		
 		do {
 			g = new BigInteger(bits, sRandom);
 			helper = calculateL(g.modPow(lambda, nSquared), n);
