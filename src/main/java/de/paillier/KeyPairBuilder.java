@@ -48,9 +48,8 @@ public class KeyPairBuilder {
 		PublicKey publicKey = new PublicKey(n, nSquared, g, bits);
 		PrivateKey privateKey = new PrivateKey(lambda, helper.modInverse(n));
 		
-		KeyPair result = new KeyPair(privateKey, publicKey);
+		return new KeyPair(privateKey, publicKey);
 		
-		return result;
 	}
 	
 	// TODO separate this somewhere
