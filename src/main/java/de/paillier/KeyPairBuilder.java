@@ -1,11 +1,12 @@
 package de.paillier;
 
 import java.math.BigInteger;
-import java.security.SecureRandom;
+import java.util.Random;
 
 public class KeyPairBuilder {
 	private int bits = 1024;
 	private int certainty = 64;
+	private Random rng;
 	
 	public KeyPairBuilder setBits(int bits) {
 		this.bits = bits;
@@ -16,11 +17,17 @@ public class KeyPairBuilder {
 		this.certainty = certainty;
 		return this;
 	}
+	
+	public KeyPairBuilder setRandomNumberGenerator(Random rng) {
+		this.rng = rng;
+		return this;
+	}
 
 	public KeyPair generateKeyPair() {
-		SecureRandom sRandom = new SecureRandom();
-		BigInteger p = new BigInteger(bits / 2, certainty, sRandom);
-		BigInteger q = new BigInteger(bits / 2, certainty, sRandom);
+//		BigInteger p = new BigInteger(bits / 2, certainty, rng);
+//		BigInteger q = new BigInteger(bits / 2, certainty, rng);
+		BigInteger p = BigInteger.probablePrime(bits / 2, rng);
+		BigInteger q = BigInteger.probablePrime(bits / 2, rng);
 		
 		BigInteger n = p.multiply(q);
 		BigInteger nSquared = n.multiply(n);
@@ -29,11 +36,11 @@ public class KeyPairBuilder {
 		BigInteger qMinusOne = q.subtract(BigInteger.ONE);
 		BigInteger lambda  = this.lcm(pMinusOne, qMinusOne);
 		
-		BigInteger g = BigInteger.valueOf(2);
+		BigInteger g;
 		BigInteger helper; 
 		
 		do {
-			g = new BigInteger(bits, sRandom);
+			g = new BigInteger(bits, rng);
 			helper = calculateL(g.modPow(lambda, nSquared), n);
 
 		} while (!helper.gcd(n).equals(BigInteger.ONE));
