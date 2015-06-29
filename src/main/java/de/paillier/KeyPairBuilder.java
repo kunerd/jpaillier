@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class KeyPairBuilder {
 	private int bits = 1024;
-	private int certainty = 64;
+	private int certainty = 0;
 	private Random rng;
 	
 	public KeyPairBuilder setBits(int bits) {
@@ -24,16 +24,21 @@ public class KeyPairBuilder {
 	}
 
 	public KeyPair generateKeyPair() {
-//		BigInteger p = new BigInteger(bits / 2, certainty, rng);
-//		BigInteger q = new BigInteger(bits / 2, certainty, rng);
-		BigInteger p = BigInteger.probablePrime(bits / 2, rng);
-		BigInteger q = BigInteger.probablePrime(bits / 2, rng);
+		BigInteger p, q;
+		if(certainty > 0) {
+			p = new BigInteger(bits / 2, certainty, rng);
+			q = new BigInteger(bits / 2, certainty, rng);
+		} else {
+			p = BigInteger.probablePrime(bits / 2, rng);
+			q = BigInteger.probablePrime(bits / 2, rng);
+		}
 		
 		BigInteger n = p.multiply(q);
 		BigInteger nSquared = n.multiply(n);
 		
 		BigInteger pMinusOne = p.subtract(BigInteger.ONE);
 		BigInteger qMinusOne = q.subtract(BigInteger.ONE);
+		
 		BigInteger lambda  = this.lcm(pMinusOne, qMinusOne);
 		
 		BigInteger g;

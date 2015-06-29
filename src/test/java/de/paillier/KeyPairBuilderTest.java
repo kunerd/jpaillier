@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,7 +29,32 @@ public class KeyPairBuilderTest {
     BigInteger q = BigInteger.valueOf(7);
     BigInteger g1 = BigInteger.valueOf(35);
     BigInteger g2 = BigInteger.valueOf(36);
+
+	private Random rng;
 	
+	@Before
+	public void beforeEach() {
+    	rng = PowerMockito.mock(SecureRandom.class);
+    	
+    	keygen = new KeyPairBuilder()
+			.setBits(BITS)
+			.setRandomNumberGenerator(rng);	
+
+    	PowerMockito.mockStatic(BigInteger.class);
+	}
+	
+    private void prepareTest() throws Exception { 
+    	
+    	PowerMockito.when(BigInteger.probablePrime(BITS / 2, rng)).thenReturn(p, q); 
+    	
+    	PowerMockito.whenNew(BigInteger.class).withArguments(BITS, rng).thenReturn(g1, g2);
+
+    	keypair = keygen.generateKeyPair();
+    	
+    	publicKey = keypair.getPublicKey();
+    	privateKey = keypair.getPrivateKey();
+    }
+    
 	@Test 
 	public void computationOfN() throws Exception {
 		prepareTest();
@@ -39,24 +65,6 @@ public class KeyPairBuilderTest {
 		assertEquals(e, a);
 	}
 
-	private void prepareTest() throws Exception { 
-		
-		Random rng = PowerMockito.mock(SecureRandom.class);
-
-		this.keygen = new KeyPairBuilder().setBits(BITS)
-				.setRandomNumberGenerator(rng);
-	
-        PowerMockito.mockStatic(BigInteger.class);
-        
-        PowerMockito.when(BigInteger.probablePrime(BITS / 2, rng)).thenReturn(p, q); 
-        
-        PowerMockito.whenNew(BigInteger.class).withAnyArguments().thenReturn(g1, g2);
-		
-		keypair = keygen.generateKeyPair();
-		
-		publicKey = keypair.getPublicKey();
-		privateKey = keypair.getPrivateKey();
-	}
 	
 	@Test
 	public void computationOfLambda() throws Exception {
@@ -74,6 +82,28 @@ public class KeyPairBuilderTest {
 		prepareTest();
 
         PowerMockito.verifyNew(BigInteger.class, Mockito.times(2)).withArguments(Mockito.eq(128), Mockito.any(Random.class));
+	}
+	
+	@Test
+	public void withoutCertainty() throws Exception {
+		prepareTest();
+
+		PowerMockito.verifyStatic(Mockito.times(2));
+		BigInteger.probablePrime(BITS / 2, rng);
+
+	}
+	
+	@Test
+	public void withCertainty() throws Exception {
+		int certainty = 6;
+
+		keygen.setCertainty(certainty);
+		
+		PowerMockito.whenNew(BigInteger.class).withArguments(BITS / 2, certainty , rng).thenReturn(p, q);
+		
+		prepareTest();
+
+        PowerMockito.verifyNew(BigInteger.class, Mockito.times(2)).withArguments(BITS / 2, certainty, rng);
 	}
 	
 }
