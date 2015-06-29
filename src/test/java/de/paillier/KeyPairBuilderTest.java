@@ -37,8 +37,8 @@ public class KeyPairBuilderTest {
     	rng = PowerMockito.mock(SecureRandom.class);
     	
     	keygen = new KeyPairBuilder()
-			.setBits(BITS)
-			.setRandomNumberGenerator(rng);	
+			.bits(BITS)
+			.randomNumberGenerator(rng);	
 
     	PowerMockito.mockStatic(BigInteger.class);
 	}
@@ -97,7 +97,7 @@ public class KeyPairBuilderTest {
 	public void withCertainty() throws Exception {
 		int certainty = 6;
 
-		keygen.setCertainty(certainty);
+		keygen.certainty(certainty);
 		
 		PowerMockito.whenNew(BigInteger.class).withArguments(BITS / 2, certainty , rng).thenReturn(p, q);
 		

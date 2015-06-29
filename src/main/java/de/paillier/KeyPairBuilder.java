@@ -9,17 +9,17 @@ public class KeyPairBuilder {
 	private int certainty = 0;
 	private Random rng;
 	
-	public KeyPairBuilder setBits(int bits) {
+	public KeyPairBuilder bits(int bits) {
 		this.bits = bits;
 		return this;
 	}
 	
-	public KeyPairBuilder setCertainty(int certainty) {
+	public KeyPairBuilder certainty(int certainty) {
 		this.certainty = certainty;
 		return this;
 	}
 	
-	public KeyPairBuilder setRandomNumberGenerator(Random rng) {
+	public KeyPairBuilder randomNumberGenerator(Random rng) {
 		this.rng = rng;
 		return this;
 	}
@@ -30,12 +30,13 @@ public class KeyPairBuilder {
 		}
 		
 		BigInteger p, q;
+		int length = bits / 2;
 		if(certainty > 0) {
-			p = new BigInteger(bits / 2, certainty, rng);
-			q = new BigInteger(bits / 2, certainty, rng);
+			p = new BigInteger(length, certainty, rng);
+			q = new BigInteger(length, certainty, rng);
 		} else {
-			p = BigInteger.probablePrime(bits / 2, rng);
-			q = BigInteger.probablePrime(bits / 2, rng);
+			p = BigInteger.probablePrime(length, rng);
+			q = BigInteger.probablePrime(length, rng);
 		}
 		
 		BigInteger n = p.multiply(q);
