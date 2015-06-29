@@ -1,4 +1,4 @@
-package de.paillier;
+package de.henku.jpaillier;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,6 +13,11 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import de.henku.jpaillier.KeyPair;
+import de.henku.jpaillier.KeyPairBuilder;
+import de.henku.jpaillier.PrivateKey;
+import de.henku.jpaillier.PublicKey;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(KeyPairBuilder.class)

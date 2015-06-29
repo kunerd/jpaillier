@@ -1,4 +1,4 @@
-package de.paillier;
+package de.henku.jpaillier;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,10 +7,10 @@ import java.math.BigInteger;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.paillier.KeyPair;
-import de.paillier.KeyPairBuilder;
-import de.paillier.PrivateKey;
-import de.paillier.PublicKey;
+import de.henku.jpaillier.KeyPair;
+import de.henku.jpaillier.KeyPairBuilder;
+import de.henku.jpaillier.PrivateKey;
+import de.henku.jpaillier.PublicKey;
 
 public class KeyPairBuilderPublicKeyTest {
 	

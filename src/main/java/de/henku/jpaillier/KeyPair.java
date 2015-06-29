@@ -1,4 +1,4 @@
-package de.paillier;
+package de.henku.jpaillier;
 
 import java.math.BigInteger;
 
