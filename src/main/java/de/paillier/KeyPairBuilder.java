@@ -1,6 +1,7 @@
 package de.paillier;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class KeyPairBuilder {
@@ -24,6 +25,10 @@ public class KeyPairBuilder {
 	}
 
 	public KeyPair generateKeyPair() {
+		if(rng == null) {
+			rng = new SecureRandom();
+		}
+		
 		BigInteger p, q;
 		if(certainty > 0) {
 			p = new BigInteger(bits / 2, certainty, rng);
