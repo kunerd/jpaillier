@@ -3,6 +3,16 @@ package de.henku.jpaillier;
 import java.math.BigInteger;
 import java.util.Random;
 
+/**
+ * A class that represents the public part of the Paillier key pair.
+ * <p>
+ * As in all asymmetric cryptographic systems it is responsible for the 
+ * encryption.
+ * <p>
+ * Additional instructions for the decryption can be found on {@link KeyPair}.
+ *
+ * @see KeyPair
+ */
 public class PublicKey {
 	private int bits;
 	private BigInteger n;
@@ -32,6 +42,12 @@ public class PublicKey {
 		return g;
 	}
 	
+	/**
+	 * Encrypts the given plaintext.
+	 * 
+	 * @param m The plaintext that should be encrypted.
+	 * @return The corresponding ciphertext.
+	 */
 	public final BigInteger encrypt(BigInteger m) {
 		
 		BigInteger r;

@@ -2,7 +2,9 @@ package de.henku.jpaillier;
 
 import java.math.BigInteger;
 
-
+/**
+ * A class that holds a pair of associated public and private keys.
+ */
 public class KeyPair {
 
 	private PrivateKey privateKey;
@@ -21,6 +23,12 @@ public class KeyPair {
 		return publicKey;
 	}
 	
+	/**
+	 * Decrypts the given ciphertext.
+	 * 
+	 * @param c The ciphertext that should be decrypted.
+	 * @return The corresponding plaintext.
+	 */
     public final BigInteger decrypt(BigInteger c) {
 		
 		BigInteger n = publicKey.getN();
