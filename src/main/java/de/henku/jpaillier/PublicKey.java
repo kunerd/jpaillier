@@ -14,12 +14,12 @@ import java.util.Random;
  * @see KeyPair
  */
 public class PublicKey {
-	private int bits;
-	private BigInteger n;
-	private BigInteger nSquared;
-	private BigInteger g;
-
-	public PublicKey(BigInteger n, BigInteger nSquared, BigInteger g, int bits) {
+	private final int bits;
+	private final BigInteger n;
+	private final BigInteger nSquared;
+	private final BigInteger g;
+	
+	PublicKey(BigInteger n, BigInteger nSquared, BigInteger g, int bits) {
 		this.n = n;
 		this.nSquared = nSquared;
 		this.bits = bits;

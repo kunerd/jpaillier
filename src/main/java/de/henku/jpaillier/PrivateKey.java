@@ -5,12 +5,12 @@ import java.math.BigInteger;
 /**
  * A class that represents the private part of the Paillier key pair.
  */
-public class PrivateKey {
+class PrivateKey {
 	
-	private BigInteger lambda;
-	private BigInteger preCalculatedDenominator;
+	private final BigInteger lambda;
+	private final BigInteger preCalculatedDenominator;
 	
-	public PrivateKey(BigInteger lambda, BigInteger preCalculatedDenominator) {
+	PrivateKey(BigInteger lambda, BigInteger preCalculatedDenominator) {
 		this.lambda = lambda;
 		
 		this.preCalculatedDenominator = preCalculatedDenominator;

@@ -7,10 +7,10 @@ import java.math.BigInteger;
  */
 public class KeyPair {
 
-	private PrivateKey privateKey;
-	private PublicKey publicKey;
+	private final PrivateKey privateKey;
+	private final PublicKey publicKey;
 	
-	public KeyPair(PrivateKey privateKey, PublicKey publicKey) {
+	KeyPair(PrivateKey privateKey, PublicKey publicKey) {
 		this.privateKey = privateKey;
 		this.publicKey = publicKey;
 	}
