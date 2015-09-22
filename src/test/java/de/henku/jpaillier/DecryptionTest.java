@@ -18,7 +18,7 @@ public class DecryptionTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
+        return Arrays.asList(new Object[][]{
                 createTestParameter(Long.MIN_VALUE),
                 createTestParameter(Integer.MIN_VALUE),
                 createTestParameter(Short.MIN_VALUE),
@@ -50,7 +50,7 @@ public class DecryptionTest {
 
     private static Object[] createTestParameter(long plaintext) {
         BigInteger p = BigInteger.valueOf(plaintext);
-        return new Object[] { p, p };
+        return new Object[]{p, p};
     }
 
 }

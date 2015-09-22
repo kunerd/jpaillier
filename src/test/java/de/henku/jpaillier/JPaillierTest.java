@@ -13,33 +13,33 @@ import de.henku.jpaillier.KeyPairBuilder;
 import de.henku.jpaillier.PublicKey;
 
 public class JPaillierTest {
-	
-	private KeyPair keyPair;
-	PublicKey publicKey;
-	
-	@Before
-	public void init() {
-		KeyPairBuilder keygen = new KeyPairBuilder();
-		keyPair = keygen.generateKeyPair();
-		publicKey = keyPair.getPublicKey();
-	}
 
-	@Test
-	public void testEncryption() {
-		BigInteger plainData = BigInteger.valueOf(10);
-		
-		BigInteger encryptedData = publicKey.encrypt(plainData);
-		
-		assertNotEquals(plainData, encryptedData);
-	}
+    private KeyPair keyPair;
+    PublicKey publicKey;
 
-	@Test
-	public void testDecyption() {
-		BigInteger plainData = BigInteger.valueOf(10);
+    @Before
+    public void init() {
+        KeyPairBuilder keygen = new KeyPairBuilder();
+        keyPair = keygen.generateKeyPair();
+        publicKey = keyPair.getPublicKey();
+    }
 
-		BigInteger encryptedData = publicKey.encrypt(plainData);
-		BigInteger decryptedData = keyPair.decrypt(encryptedData);
+    @Test
+    public void testEncryption() {
+        BigInteger plainData = BigInteger.valueOf(10);
 
-		assertEquals(plainData, decryptedData);
-	}
+        BigInteger encryptedData = publicKey.encrypt(plainData);
+
+        assertNotEquals(plainData, encryptedData);
+    }
+
+    @Test
+    public void testDecyption() {
+        BigInteger plainData = BigInteger.valueOf(10);
+
+        BigInteger encryptedData = publicKey.encrypt(plainData);
+        BigInteger decryptedData = keyPair.decrypt(encryptedData);
+
+        assertEquals(plainData, decryptedData);
+    }
 }
