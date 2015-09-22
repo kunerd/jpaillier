@@ -1,13 +1,12 @@
 # Eclipse specific settings
-
 .classpath
 .project
 .settings
 
 # IntelliJ Idea settings
-
+*.iml
+/.idea
 .idea
-scribe.iml
 
 # Binaries
 bin

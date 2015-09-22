@@ -36,11 +36,10 @@ public class JPaillierTest {
 	@Test
 	public void testDecyption() {
 		BigInteger plainData = BigInteger.valueOf(10);
-		
+
 		BigInteger encryptedData = publicKey.encrypt(plainData);
 		BigInteger decryptedData = keyPair.decrypt(encryptedData);
-		
+
 		assertEquals(plainData, decryptedData);
 	}
-	
 }

@@ -11,9 +11,14 @@ import java.util.Random;
  * @see KeyPair
  */
 public class KeyPairBuilder {
+
 	private int bits = 1024;
+
 	private int certainty = 0;
+
 	private Random rng;
+
+	private BigInteger upperBound;
 	
 	/**
 	 * Sets the size of the key to be created.
@@ -61,6 +66,20 @@ public class KeyPairBuilder {
 	}
 
 	/**
+	 * Sets an upper bound that is used for decrypting ciphertexts representing a negative value.
+	 * <p>
+     * In most cases the upper bound should be the same as of the underlying number system -
+     * for example {@link Integer#MAX_VALUE}.
+     *
+	 * @param b The upper bound.
+	 * @return This instance of KeyPairBuilder for method chaining.
+	 */
+	public KeyPairBuilder upperBound(BigInteger b)  {
+		this.upperBound = b;
+		return this;
+	}
+
+	/**
 	 * Creates a pair of associated public and private keys.
 	 * 
 	 * @return The pair of associated public and private keys.
@@ -96,11 +115,11 @@ public class KeyPairBuilder {
 			helper = calculateL(g.modPow(lambda, nSquared), n);
 
 		} while (!helper.gcd(n).equals(BigInteger.ONE));
-		
+
 		PublicKey publicKey = new PublicKey(n, nSquared, g, bits);
 		PrivateKey privateKey = new PrivateKey(lambda, helper.modInverse(n));
 		
-		return new KeyPair(privateKey, publicKey);
+		return new KeyPair(privateKey, publicKey, upperBound);
 		
 	}
 	

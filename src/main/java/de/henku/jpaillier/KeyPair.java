@@ -9,10 +9,12 @@ public class KeyPair {
 
 	private final PrivateKey privateKey;
 	private final PublicKey publicKey;
+	private final BigInteger upperBound;
 	
-	KeyPair(PrivateKey privateKey, PublicKey publicKey) {
+	KeyPair(PrivateKey privateKey, PublicKey publicKey, BigInteger upperBound) {
 		this.privateKey = privateKey;
 		this.publicKey = publicKey;
+		this.upperBound = upperBound;
 	}
 	
 	public PrivateKey getPrivateKey() {
@@ -27,7 +29,8 @@ public class KeyPair {
 	 * Decrypts the given ciphertext.
 	 * 
 	 * @param c The ciphertext that should be decrypted.
-	 * @return The corresponding plaintext.
+	 * @return The corresponding plaintext. If an upper bound was given to {@link KeyPairBuilder},
+	 * the result can also be negative. See {@link KeyPairBuilder#upperBound(BigInteger)} for details.
 	 */
     public final BigInteger decrypt(BigInteger c) {
 		
@@ -36,6 +39,13 @@ public class KeyPair {
 		BigInteger lambda = privateKey.getLambda();
 		
         BigInteger u = privateKey.getPreCalculatedDenominator();
-        return c.modPow(lambda, nSquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
+
+		BigInteger p = c.modPow(lambda, nSquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
+
+		if (upperBound != null && p.compareTo(upperBound) > 0) {
+			p = p.subtract(n);
+		}
+
+		return p;
     }
 }
