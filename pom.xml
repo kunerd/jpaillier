@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.henku.jpaillier</groupId>
 	<artifactId>jpaillier</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<name>JPaillier</name>
 	<description>A Java implementation of Paillier cryptosystem.</description>
 
