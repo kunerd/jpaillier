@@ -2,15 +2,11 @@ jPaillier
 =========
 [![Build Status](https://travis-ci.org/kunerd/jpaillier.png?branch=master)](https://travis-ci.org/kunerd/jpaillier)
 
-A Java implementation of Paillier cryptosystem.
+A Java implementation of the Paillier cryptosystem.
 
-This library is developed as part of the research project CoPPDA (Corporate
-  Privacy Preserving Data Analysis, http://www.enterprise-application-development.org/projects/coppda.html). There
-  it is used for the implementation of different privacy preserving data minin
-  methods.
+This library was developed as part of the research project CoPPDA (Corporate Privacy Preserving Data Analysis, http://www.enterprise-application-development.org/projects/coppda.html). To see it in action have a look at [ppid3](https://github.com/kunerd/ppid3) where it is used to implement a privacy preserving ID3 decision tree generation algorithm.
 
-WARNING: This library is developed for research, also it is in an early state
-and therefor NOT production ready.
+**WARNING: This library was developed for research only and is by no means implemented in a cryptographically secure way.**
 
 Usage
 -----
@@ -49,7 +45,7 @@ An interesting feature of the Paillier cryptosystem is its homomophic properties
 ```
 See the references for details. More examples can be found in the file: [HomomorphicPropertiesTest](https://github.com/kunerd/jpaillier/blob/master/src/test/java/de/paillier/HomomorphicPropertiesTest.java).
 
-##References
+## References
  * [Public-Key Cryptosystems Based on Composite
 Degree Residuosity Classes](http://www.cs.tau.ac.il/~fiat/crypt07/papers/Pai99pai.pdf)
  * [Wikipedia article](https://en.wikipedia.org/wiki/Paillier_cryptosystem)
