@@ -43,7 +43,7 @@ An interesting feature of the Paillier cryptosystem is its homomophic properties
 		
 	// additionResult = 102 + 203 = 305
 ```
-See the references for details. More examples can be found in the file: [HomomorphicPropertiesTest](https://github.com/kunerd/jpaillier/blob/master/src/test/java/de/paillier/HomomorphicPropertiesTest.java).
+See the references for details. More examples can be found in the file: [HomomorphicPropertiesTest](https://github.com/kunerd/jpaillier/blob/master/src/test/java/de/henku/jpaillier/HomomorphicPropertiesTest.java).
 
 ## References
  * [Public-Key Cryptosystems Based on Composite
